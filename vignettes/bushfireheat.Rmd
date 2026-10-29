@@ -1,0 +1,95 @@
+---
+title: "Getting started with bushfireheat"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with bushfireheat}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 4.5
+)
+```
+
+bushfireheat is for risk analysts who price bushfire exposure in south-eastern
+Australia. It answers one question: how much more often does extreme heat
+occur in the fire season now than in 1950–1979, and does the answer depend on
+where the threshold for "extreme" is set?
+
+## Install and load
+
+```{r, eval = FALSE}
+# install.packages("remotes")
+remotes::install_github("ETC5523-2026/etc5523-assignment-4-hanwen-l")
+```
+
+```{r setup}
+library(bushfireheat)
+```
+
+## Launch the app
+
+```{r, eval = FALSE}
+run_app()
+```
+
+Choose one or more towns and a hot-day threshold in the sidebar. The chart
+shows how many days in each fire season reached the threshold, and the table
+compares the 1950–79 baseline with 1996–2025.
+
+## The data
+
+`fire_daily` has one row per town and day, for every day of every
+September–February fire season since 1950/51. A season is labelled by the
+year it starts, so `season == 2019` is the 2019/20 Black Summer.
+
+```{r}
+fire_towns
+head(fire_daily)
+```
+
+## Count hot days and compare periods
+
+`summarise_seasons()` counts the days in each season that reached the
+threshold, and `compare_periods()` averages them over two periods.
+
+```{r}
+seasons <- summarise_seasons(fire_daily, threshold = 35)
+comparison <- compare_periods(seasons)
+comparison
+```
+
+```{r, echo = FALSE}
+canberra <- comparison[comparison$town == "Canberra", ]
+```
+
+In Canberra, a fire season averaged `r round(canberra$baseline_hot_days, 1)`
+days at or above 35 °C in 1950–79 and `r round(canberra$recent_hot_days, 1)`
+in 1996–2025, about `r round(canberra$ratio, 1)` times as many. Average
+fire-season rainfall barely changed, from `r round(canberra$baseline_rain)` mm
+to `r round(canberra$recent_rain)` mm.
+
+```{r}
+plot_hot_days(seasons)
+```
+
+## Check the threshold
+
+A higher threshold gives a larger ratio, but from fewer days. When the
+baseline has fewer than 10 hot days in total, `reliable` is `FALSE` and the
+ratio should not be read on its own.
+
+```{r}
+compare_periods(summarise_seasons(fire_daily, threshold = 38))
+```
+
+## Limitations
+
+The data are ERA5 grid-cell values, about 25 km across, rather than weather
+station readings, and they measure heat and rain, not fire weather indices,
+fuel or ignition.

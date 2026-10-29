@@ -1,0 +1,34 @@
+Package: bushfireheat
+Title: Explore Fire-Season Heat in South-Eastern Australia
+Version: 0.0.0.9000
+Authors@R: 
+    person("Hanwen", "Liu", , "hliu0223@student.monash.edu", role = c("aut", "cre"))
+Description: Daily maximum temperature and rainfall from the ERA5
+    reanalysis for eight towns in south-eastern Australia affected by the
+    2019/20 Black Summer fires. Functions count hot days in each September
+    to February fire season, compare a recent period with a mid-century
+    baseline and plot the result, and a Shiny app lets users explore how
+    often extreme fire-season heat now occurs and how sensitive that
+    change is to the temperature threshold.
+License: MIT + file LICENSE
+Depends: 
+    R (>= 4.1.0)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+Imports: 
+    bslib,
+    dplyr (>= 1.1.0),
+    ggplot2,
+    rlang,
+    shiny
+URL: https://etc5523-2026.github.io/etc5523-assignment-4-hanwen-l/,
+    https://github.com/ETC5523-2026/etc5523-assignment-4-hanwen-l
+BugReports: https://github.com/ETC5523-2026/etc5523-assignment-4-hanwen-l/issues
+LazyData: true
+Config/roxygen2/version: 8.1.0

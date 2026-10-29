@@ -1,0 +1,17 @@
+url: https://etc5523-2026.github.io/etc5523-assignment-4-hanwen-l/
+template:
+  bootstrap: 5
+
+reference:
+  - title: Data
+    contents:
+      - fire_daily
+      - fire_towns
+  - title: Count and compare hot days
+    contents:
+      - summarise_seasons
+      - compare_periods
+      - plot_hot_days
+  - title: App
+    contents:
+      - run_app

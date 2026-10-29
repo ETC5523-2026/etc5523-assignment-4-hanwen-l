@@ -1,0 +1,7 @@
+.Rproj.user
+docs
+inst/doc
+.DS_Store
+.Rhistory
+.RData
+.Ruserdata
