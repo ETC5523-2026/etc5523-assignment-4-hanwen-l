@@ -50,9 +50,3 @@ package data without calling the API again.
 
 ## Generative AI declaration
 
-Generative AI declaration: I used Claude (Claude Code, Anthropic) to explain
-the assignment requirements, compare candidate data sources and test the
-Open-Meteo API, and to draft the initial package structure: the
-data-preparation script, the exported functions with their documentation and
-tests, a starter Shiny app, this README and the vignette. I checked and
-revised all generated code and text.
