@@ -44,6 +44,9 @@ fire_towns
 #> 3       Bega   NSW -36.67 149.84   -36.75   149.75        11
 #> 4   Canberra   ACT -35.28 149.13   -35.25   149.25       574
 #> 5    Grafton   NSW -29.69 152.93   -29.75   153.00         8
+#> 6   Katoomba   NSW -33.71 150.31   -33.75   150.25      1019
+#> 7     Orbost   VIC -37.70 148.46   -37.75   148.50        45
+#> 8      Tumut   NSW -35.30 148.22   -35.25   148.25       272
 head(fire_daily)
 #>       town season       date tmax rain
 #> 1 Armidale   1950 1950-09-01 18.0    0
@@ -66,7 +69,7 @@ averages them over two periods.
 seasons <- summarise_seasons(fire_daily, threshold = 35)
 comparison <- compare_periods(seasons)
 comparison
-#> # A tibble: 5 × 8
+#> # A tibble: 8 × 8
 #>   town       baseline_hot_days recent_hot_days ratio reliable baseline_total
 #>   <chr>                  <dbl>           <dbl> <dbl> <lgl>             <int>
 #> 1 Armidale              0.0667           0.167  2.5  FALSE                 2
@@ -74,6 +77,9 @@ comparison
 #> 3 Bega                  1.5              2.07   1.38 TRUE                 45
 #> 4 Canberra              1.1              3.27   2.97 TRUE                 33
 #> 5 Grafton               3.77             5.4    1.43 TRUE                113
+#> 6 Katoomba              0.167            0.433  2.6  FALSE                 5
+#> 7 Orbost                6.6              7.77   1.18 TRUE                198
+#> 8 Tumut                 3.53             9.07   2.57 TRUE                106
 #> # ℹ 2 more variables: baseline_rain <dbl>, recent_rain <dbl>
 ```
 
@@ -97,7 +103,7 @@ the ratio should not be read on its own.
 ``` r
 
 compare_periods(summarise_seasons(fire_daily, threshold = 38))
-#> # A tibble: 5 × 8
+#> # A tibble: 8 × 8
 #>   town       baseline_hot_days recent_hot_days ratio reliable baseline_total
 #>   <chr>                  <dbl>           <dbl> <dbl> <lgl>             <int>
 #> 1 Armidale              0                0     NA    FALSE                 0
@@ -105,6 +111,9 @@ compare_periods(summarise_seasons(fire_daily, threshold = 38))
 #> 3 Bega                  0.1              0.4    4    FALSE                 3
 #> 4 Canberra              0.0667           0.267  4    FALSE                 2
 #> 5 Grafton               0.567            0.967  1.71 TRUE                 17
+#> 6 Katoomba              0                0     NA    FALSE                 0
+#> 7 Orbost                2.17             3.17   1.46 TRUE                 65
+#> 8 Tumut                 0.633            2.77   4.37 TRUE                 19
 #> # ℹ 2 more variables: baseline_rain <dbl>, recent_rain <dbl>
 ```
 
