@@ -18,16 +18,57 @@ remotes::install_github("ETC5523-2026/etc5523-assignment-4-hanwen-l")
 library(bushfireheat)
 ```
 
-## Launch the app
+## Launch and use the app
 
 ``` r
 
 run_app()
 ```
 
-Choose one or more towns and a hot-day threshold in the sidebar. The
-chart shows how many days in each fire season reached the threshold, and
-the table compares the 1950–79 baseline with 1996–2025.
+![The Explore tab of the app, with four towns selected at a 35 °C
+threshold.](figures/app-explore.png)
+
+The app has two tabs. **Explore** is where you work, and **How to use**
+defines every term and lists the data’s limitations. On the Explore tab:
+
+1.  Pick one or more towns in **Towns**.
+2.  Set the **Hot-day threshold**. A hot day is a day whose maximum
+    temperature reaches it.
+3.  Read the headline. It answers the question for your selection: how
+    many times as common days at or above the threshold are in 1996–2025
+    as in 1950–79, across the towns with enough data. The sentence below
+    it compares rainfall over the same seasons.
+4.  Read the chart and table for the detail behind the headline.
+5.  Move the threshold up and down to see whether the answer depends on
+    it.
+
+## Interpret the outputs
+
+**The headline.** With the four towns in the screenshot at 35 °C, days
+that hot are now 1.2 to 3.0 times as common as in 1950–79. Inland towns
+show the largest rises (Canberra 3.0×, Tumut 2.6×) and Orbost the
+smallest (1.2×). Average fire-season rainfall changed by between -3% and
++2%, so the extra heat has not come with drier seasons.
+
+**The chart.** Each panel is one town and each bar one fire season, on a
+shared scale. The orange bar is 2019/20, the Black Summer, and the black
+line averages the previous 10 seasons. Where the line climbs after the
+1990s, hot days have become more common; in Canberra and Tumut, 2019/20
+is among the hottest seasons on record but not an outlier against recent
+years.
+
+**The table.** It gives each town’s average hot days per season in both
+periods, their ratio and the change in rainfall.
+
+**What this means for the question.** Loadings built on 1950–79
+experience would understate how often these towns now see fire-season
+heat, and the change comes from heat rather than drought.
+
+**When a town is left out.** A town needs at least 10 hot days in
+1950–79 for its ratio to be stable. Highland towns rarely reach 35 °C,
+so if you add Armidale or Katoomba the headline leaves them out, names
+them, and the table shows a dash. Lower the threshold to about 32 °C to
+include them.
 
 ## The data
 
@@ -38,37 +79,43 @@ the year it starts, so `season == 2019` is the 2019/20 Black Summer.
 ``` r
 
 fire_towns
-#>         town state    lat    lon grid_lat grid_lon elevation
-#> 1   Armidale   NSW -30.51 151.67   -30.50   151.75       985
-#> 2 Bairnsdale   VIC -37.82 147.63   -37.75   147.75         2
-#> 3       Bega   NSW -36.67 149.84   -36.75   149.75        11
-#> 4   Canberra   ACT -35.28 149.13   -35.25   149.25       574
-#> 5    Grafton   NSW -29.69 152.93   -29.75   153.00         8
-#> 6   Katoomba   NSW -33.71 150.31   -33.75   150.25      1019
-#> 7     Orbost   VIC -37.70 148.46   -37.75   148.50        45
-#> 8      Tumut   NSW -35.30 148.22   -35.25   148.25       272
+#> # A tibble: 8 × 7
+#>   town       state   lat   lon grid_lat grid_lon elevation
+#>   <chr>      <chr> <dbl> <dbl>    <dbl>    <dbl>     <dbl>
+#> 1 Armidale   NSW   -30.5  152.    -30.5     152.       985
+#> 2 Bairnsdale VIC   -37.8  148.    -37.8     148.         2
+#> 3 Bega       NSW   -36.7  150.    -36.8     150.        11
+#> 4 Canberra   ACT   -35.3  149.    -35.2     149.       574
+#> 5 Grafton    NSW   -29.7  153.    -29.8     153          8
+#> 6 Katoomba   NSW   -33.7  150.    -33.8     150.      1019
+#> 7 Orbost     VIC   -37.7  148.    -37.8     148.        45
+#> 8 Tumut      NSW   -35.3  148.    -35.2     148.       272
 head(fire_daily)
-#>       town season       date tmax rain
-#> 1 Armidale   1950 1950-09-01 18.0    0
-#> 2 Armidale   1950 1950-09-02 13.3    0
-#> 3 Armidale   1950 1950-09-03  9.4    0
-#> 4 Armidale   1950 1950-09-04 12.3    0
-#> 5 Armidale   1950 1950-09-05 15.1    0
-#> 6 Armidale   1950 1950-09-06 16.0    0
+#> # A tibble: 6 × 5
+#>   town     season date        tmax  rain
+#>   <chr>     <int> <date>     <dbl> <dbl>
+#> 1 Armidale   1950 1950-09-01  18       0
+#> 2 Armidale   1950 1950-09-02  13.3     0
+#> 3 Armidale   1950 1950-09-03   9.4     0
+#> 4 Armidale   1950 1950-09-04  12.3     0
+#> 5 Armidale   1950 1950-09-05  15.1     0
+#> 6 Armidale   1950 1950-09-06  16       0
 ```
 
-## Count hot days and compare periods
+## Use the functions directly
 
+The app is built on three exported functions.
 [`summarise_seasons()`](https://etc5523-2026.github.io/etc5523-assignment-4-hanwen-l/reference/summarise_seasons.md)
-counts the days in each season that reached the threshold, and
+counts the days in each season that reached the threshold,
 [`compare_periods()`](https://etc5523-2026.github.io/etc5523-assignment-4-hanwen-l/reference/compare_periods.md)
-averages them over two periods.
+averages them over the two periods, and
+[`plot_hot_days()`](https://etc5523-2026.github.io/etc5523-assignment-4-hanwen-l/reference/plot_hot_days.md)
+draws the chart.
 
 ``` r
 
 seasons <- summarise_seasons(fire_daily, threshold = 35)
-comparison <- compare_periods(seasons)
-comparison
+compare_periods(seasons)
 #> # A tibble: 8 × 8
 #>   town       baseline_hot_days recent_hot_days ratio reliable baseline_total
 #>   <chr>                  <dbl>           <dbl> <dbl> <lgl>             <int>
@@ -83,18 +130,12 @@ comparison
 #> # ℹ 2 more variables: baseline_rain <dbl>, recent_rain <dbl>
 ```
 
-In Canberra, a fire season averaged 1.1 days at or above 35 °C in
-1950–79 and 3.3 in 1996–2025, about 3 times as many. Average fire-season
-rainfall barely changed, from 327 mm to 317 mm.
-
 ``` r
 
 plot_hot_days(seasons)
 ```
 
-![](bushfireheat_files/figure-html/unnamed-chunk-7-1.png)
-
-## Check the threshold
+![](bushfireheat_files/figure-html/unnamed-chunk-8-1.png)
 
 A higher threshold gives a larger ratio, but from fewer days. When the
 baseline has fewer than 10 hot days in total, `reliable` is `FALSE` and
@@ -120,5 +161,6 @@ compare_periods(summarise_seasons(fire_daily, threshold = 38))
 ## Limitations
 
 The data are ERA5 grid-cell values, about 25 km across, rather than
-weather station readings, and they measure heat and rain, not fire
-weather indices, fuel or ignition.
+weather station readings, so they smooth out local extremes. They
+measure heat and rain only, not fire weather indices, wind, fuel or
+ignition.
