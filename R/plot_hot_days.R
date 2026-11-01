@@ -23,18 +23,19 @@ plot_hot_days <- function(seasons, highlight = 2019) {
     )
 
   ggplot2::ggplot(seasons, ggplot2::aes(.data$season, .data$hot_days)) +
-    ggplot2::geom_col(fill = "#2a78d6", width = 0.8) +
+    ggplot2::geom_col(fill = "#2f78b0", width = 0.8) +
     ggplot2::geom_col(
       data = seasons[seasons$season == highlight, ],
-      fill = "#eb6834",
+      fill = "#d9481c",
       width = 0.8
     ) +
     ggplot2::geom_line(
       ggplot2::aes(y = .data$running_mean),
-      colour = "#0b0b0b",
+      colour = "#1e2a2e",
       linewidth = 0.7,
       na.rm = TRUE
     ) +
+    ggplot2::scale_x_continuous(breaks = c(1960, 1990, 2020)) +
     ggplot2::facet_wrap(ggplot2::vars(.data$town)) +
     ggplot2::labs(
       x = "Fire season (year it starts)",
@@ -48,6 +49,9 @@ plot_hot_days <- function(seasons, highlight = 2019) {
     ggplot2::theme(
       panel.grid.minor = ggplot2::element_blank(),
       panel.grid.major.x = ggplot2::element_blank(),
-      plot.caption = ggplot2::element_text(colour = "#52514e")
+      panel.spacing = ggplot2::unit(1.5, "lines"),
+      strip.text = ggplot2::element_text(face = "bold", hjust = 0),
+      axis.title = ggplot2::element_text(colour = "#56656b"),
+      plot.caption = ggplot2::element_text(colour = "#56656b")
     )
 }
