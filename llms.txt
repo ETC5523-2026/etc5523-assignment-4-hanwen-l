@@ -28,6 +28,10 @@ library(bushfireheat)
 run_app()
 ```
 
+The [Getting
+started](https://etc5523-2026.github.io/etc5523-assignment-4-hanwen-l/articles/bushfireheat.html)
+article walks through the app and how to read its outputs.
+
 ## Use the functions
 
 ``` r
@@ -55,6 +59,12 @@ downloads and prepares the data. Raw downloads are cached in
 the API again.
 
 ## Generative AI declaration
+
+I used Claude to help me plan the topic, data sources, target audience
+and research questions, and I selected relevant suggestions from its
+output; it also assisted me in writing the code for the package and the
+Shiny application, and in designing the charts and the application’s
+styling.
 
 # Package index
 
